@@ -2,6 +2,7 @@ current:
 python2-pygame
 python2-opengl
 stackless-python2-2.7.6r3-1-x86_64.pkg.tar.xz
+python-rabbyt-0.8.3-4-x86_64.pkg.tar.xz
 
 old:
 pygame-1.7.1release.win32-py2.5.exe
