@@ -1,0 +1,5 @@
+pygame-1.7.1release.win32-py2.5.exe
+PyOpenGL-3.0.0b1.win32.exe
+python-2.5.1-stackless.msi
+Rabbyt-0.8.win32-py2.5.exe 
+py2exe-0.6.6.win32-py2.5.exe
