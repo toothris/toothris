@@ -41,13 +41,17 @@ def async_render () :
         flags |= pygame.FULLSCREEN
 
     pygame.init ()
-    pygame.display.set_mode ( ( bconf.WIDTH, bconf.HEIGHT ), flags )
+    window = pygame.display.set_mode ( ( bconf.WIDTH, bconf.HEIGHT ), flags )
     rabbyt.set_viewport ( ( bconf.WIDTH, bconf.HEIGHT ), ( -width, height, width, -height ) )
     rabbyt.set_default_attribs ()
 
+    #count = 0
     if bconf.RENDER :
         while btasks.work_async () :
             bprofile.begin ( "render" )
             bsprites.render ()
             pygame.display.flip ()
+            #TODO
+            #pygame.image.save(window, "shot%i.png" % count)
+            #count += 1
             bprofile.end ( "render" )
