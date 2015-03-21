@@ -16,6 +16,7 @@ import sys
 from bapi import *
 from bconf import BCONF
 import bevents
+import bmusic
 import bprofile
 import brender
 import bsprites
@@ -27,6 +28,8 @@ gc.disable ()
 gc.set_debug ( gc.DEBUG_LEAK )
 
 bevents.init ()
+brender.init ()
+bmusic.init ()
 
 # START LOGIC
 trender     = brender.async_render          ()
@@ -52,6 +55,8 @@ finally :
     stop ( tevents )
 
     bevents.done ()
+    brender.done ()
+    bmusic.done ()
 
     bprofile.stats ()
 

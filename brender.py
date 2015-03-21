@@ -34,17 +34,24 @@ def world_to_screen ( xy ) :
             , ( float (-xy [ 1 ] ) + height ) * 0.5 * BCONF.height )
 
 
-@btasks.start_async_realtime
-def async_render () :
+def init () :
     flags = pygame.OPENGL | pygame.DOUBLEBUF
     if BCONF.fullscreen :
         flags |= pygame.FULLSCREEN
 
-    pygame.init ()
+    pygame.display.init ()
     window = pygame.display.set_mode ( ( BCONF.width, BCONF.height ), flags )
     rabbyt.set_viewport ( ( BCONF.width, BCONF.height ), ( -width, height, width, -height ) )
     rabbyt.set_default_attribs ()
 
+
+def done () :
+    print 'render done'
+    pygame.display.quit ()
+
+
+@btasks.start_async_realtime
+def async_render () :
     #count = 0
     if BCONF.render :
         while btasks.work_async () :
