@@ -46,7 +46,6 @@ def init () :
 
 
 def done () :
-    print 'render done'
     pygame.display.quit ()
 
 

@@ -23,6 +23,4 @@ parser.add_option('', '--events', default='toothris.events', dest='events',
                   help='Events file name.')
 parser.add_option('', '--music', default='', dest='music', 
                   help='Music file name.')
-parser.add_option('', '--musicpos', default=0, type='float', dest='musicpos', 
-                  help='Music starting position.')
 (BCONF, args) = parser.parse_args()

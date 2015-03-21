@@ -11,9 +11,8 @@ def init () :
     pygame.mixer.init ()
     if BCONF.music :
         pygame.mixer.music.load ( BCONF.music )
-        pygame.mixer.music.play ( 0, BCONF.musicpos )
+        pygame.mixer.music.play ()
 
 
 def done () :
-    print 'music done'
     pygame.mixer.quit ()
