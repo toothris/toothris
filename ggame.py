@@ -165,6 +165,7 @@ BONUS_SUPER_DROP_TIME               = 0.4
 # FIGURES
 #
 
+FIGURES_OLDEST                      = 2
 FIGURES_MAX_COUNT                   = 50
 FIGURES_HIGHLIGHTS_MAX_COUNT        = 100
 FIGURE_APPEAR_TIME                  = 0.3
@@ -1662,7 +1663,7 @@ def show () :
 
                     sorted_history = sorted (figures_history.items(),
                                              key=lambda (k,v): v)
-                    oldest = sorted_history [ :BCONF.figures ]
+                    oldest = sorted_history [ :FIGURES_OLDEST ]
                     figure_type = rand ( oldest ) [ 0 ]
                     figures_generation += 1
                     figures_history [ figure_type ] = figures_generation

@@ -23,6 +23,4 @@ parser.add_option('', '--events', default='toothris.events', dest='events',
                   help='Events file name.')
 parser.add_option('', '--music', default='', dest='music', 
                   help='Music file name.')
-parser.add_option('', '--figures', default=3, type='int', dest='figures', 
-                  help='Choose next figure out of N oldest ones.')
 (BCONF, args) = parser.parse_args()
