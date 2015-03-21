@@ -2,6 +2,7 @@
 
 # BASE
 from bapi import *
+from bconf import BCONF
 
 # GAME
 from gfigures import *
@@ -201,8 +202,6 @@ FRAGS_HIGHLIGHTS_MAX_COUNT          = 100
 FRAG_APPEAR_TIME                    = 0.5
 FRAG_APPEAR_SCALE                   = [ 0, 0.5, 2, 1 ]
 FRAG_APPEAR_DELAY                   = 0.05
-
-FIGURE_SELECTION_THRESHOLD          = 3
 
 #
 # DEPENDEND CONSTS
@@ -1645,10 +1644,10 @@ def show () :
             # LET THE GAME BEGIN
             #
 
-            figures_generation    = 1
-            figures_last_selected = {}
+            figures_generation = 1
+            figures_history = {}
             for figure_type in figures.keys () :
-                figures_last_selected [ figure_type ] = 0
+                figures_history [ figure_type ] = rand (0, 1)
 
             trotate         = None
             tmove_side      = None
@@ -1661,15 +1660,13 @@ def show () :
                     # CHOOSE NEXT FIGURE TYPE
                     #
 
-                    figure_template = rand ( figures.values () )
-                    while figures_last_selected [ figure_template.type ] == figures_generation :
-                        figure_template = rand ( figures.values () )
-                    for figure_type in figures_last_selected :
-                        if figures_generation - figures_last_selected [ figure_type ] >= len ( figures.values () ) + FIGURE_SELECTION_THRESHOLD :
-                            figure_template = figures [ figure_type ]
-                            break
+                    sorted_history = sorted (figures_history.items(),
+                                             key=lambda (k,v): v)
+                    oldest = sorted_history [ :BCONF.figures ]
+                    figure_type = rand ( oldest ) [ 0 ]
                     figures_generation += 1
-                    figures_last_selected [ figure_template.type ] = figures_generation
+                    figures_history [ figure_type ] = figures_generation
+                    figure_template = figures [ figure_type ]
 
                     #
                     # TRY TO FIT FIGURE IN STAKAN
