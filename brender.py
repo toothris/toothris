@@ -17,11 +17,13 @@ import btasks
 # SIZE      - -width...width, height...-height
 #
 
+REPORT_FRAMES = 100
 
 # GLOBALS
 aspect  = float ( BCONF.width ) / float ( BCONF.height )
 width   = 4.0
 height  = 3.0
+window  = None
 
 
 def screen_to_world ( xy ) :
@@ -35,6 +37,7 @@ def world_to_screen ( xy ) :
 
 
 def init () :
+    global window
     flags = pygame.OPENGL | pygame.DOUBLEBUF
     if BCONF.fullscreen :
         flags |= pygame.FULLSCREEN
@@ -51,13 +54,15 @@ def done () :
 
 @btasks.start_async_realtime
 def async_render () :
-    #count = 0
+    frame = 0
     if BCONF.render :
         while btasks.work_async () :
             bprofile.begin ( "render" )
             bsprites.render ()
             pygame.display.flip ()
-            #TODO
-            #pygame.image.save(window, "shot%i.png" % count)
-            #count += 1
+            if BCONF.frames :
+                pygame.image.save(window, BCONF.frames % frame)
+                if frame % REPORT_FRAMES == 0 :
+                    print 'frame %i' % frame
+                frame += 1
             bprofile.end ( "render" )
