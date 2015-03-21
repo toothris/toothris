@@ -8,7 +8,7 @@ import sys
 import time
 
 # BASE
-import bconf
+from bconf import BCONF
 import btasks
 
 
@@ -89,7 +89,7 @@ def init () :
     global mouse_pos_to_play
     global random_seed
 
-    if bconf.EVENTS_PLAY :
+    if BCONF.replay :
         f = open ( EVENTS_FILE_NAME, "rb" )
         random_seed         = pickle.load ( f )
         events_to_play      = pickle.load ( f )
@@ -101,7 +101,7 @@ def init () :
 # DONE
 
 def done () :
-    if bconf.EVENTS_RECORD :
+    if BCONF.record :
         f = open ( EVENTS_FILE_NAME, "wb" )
         pickle.dump ( random_seed        , f )
         pickle.dump ( events_recorded    , f )
@@ -122,7 +122,7 @@ def handle () :
 
     # OBTAIN MOUSE POS
 
-    if bconf.EVENTS_PLAY :
+    if BCONF.replay :
         if frame_tag in mouse_pos_to_play :
             mouse_pos = mouse_pos_to_play [ frame_tag ]
     else :
@@ -130,7 +130,7 @@ def handle () :
 
     # RECORD MOUSE POS
 
-    if bconf.EVENTS_RECORD :
+    if BCONF.record :
         if mouse_pos [ 0 ] != mouse_pos_prev [ 0 ] \
         or mouse_pos [ 1 ] != mouse_pos_prev [ 1 ] :
             mouse_pos_recorded [ frame_tag ] = mouse_pos
@@ -139,7 +139,7 @@ def handle () :
     # OBTAIN EVENTS QUEUE
 
     events = []
-    if bconf.EVENTS_PLAY :
+    if BCONF.replay :
         if frame_tag in events_to_play :
             events = events_to_play [ frame_tag ]
         for event in pygame.event.get () :
@@ -150,7 +150,7 @@ def handle () :
 
     # RECORD EVENTS QUEUE
 
-    if bconf.EVENTS_RECORD and len ( events ) > 0 :
+    if BCONF.record and len ( events ) > 0 :
         events_recorded [ frame_tag ] = [ DemoEvent ( event ) for event in events ]
 
     # HANDLE EVENTS QUEUE

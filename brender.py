@@ -5,7 +5,7 @@ import pygame
 import rabbyt
 
 # BASE
-import bconf
+from bconf import BCONF
 import bprofile
 import bsprites
 import btasks
@@ -19,34 +19,34 @@ import btasks
 
 
 # GLOBALS
-aspect  = float ( bconf.WIDTH ) / float ( bconf.HEIGHT )
+aspect  = float ( BCONF.width ) / float ( BCONF.height )
 width   = 4.0
 height  = 3.0
 
 
 def screen_to_world ( xy ) :
-    return  ( 2 * width  * ( ( float ( xy [ 0 ] ) / bconf.WIDTH  ) - 0.5 )
-            ,-2 * height * ( ( float ( xy [ 1 ] ) / bconf.HEIGHT ) - 0.5 ) )
+    return  ( 2 * width  * ( ( float ( xy [ 0 ] ) / BCONF.width  ) - 0.5 )
+            ,-2 * height * ( ( float ( xy [ 1 ] ) / BCONF.height ) - 0.5 ) )
 
 
 def world_to_screen ( xy ) :
-    return  ( ( float ( xy [ 0 ] ) + width  ) * 0.5 * bconf.WIDTH
-            , ( float (-xy [ 1 ] ) + height ) * 0.5 * bconf.HEIGHT )
+    return  ( ( float ( xy [ 0 ] ) + width  ) * 0.5 * BCONF.width
+            , ( float (-xy [ 1 ] ) + height ) * 0.5 * BCONF.height )
 
 
 @btasks.start_async_realtime
 def async_render () :
     flags = pygame.OPENGL | pygame.DOUBLEBUF
-    if bconf.FULLSCREEN :
+    if BCONF.fullscreen :
         flags |= pygame.FULLSCREEN
 
     pygame.init ()
-    window = pygame.display.set_mode ( ( bconf.WIDTH, bconf.HEIGHT ), flags )
-    rabbyt.set_viewport ( ( bconf.WIDTH, bconf.HEIGHT ), ( -width, height, width, -height ) )
+    window = pygame.display.set_mode ( ( BCONF.width, BCONF.height ), flags )
+    rabbyt.set_viewport ( ( BCONF.width, BCONF.height ), ( -width, height, width, -height ) )
     rabbyt.set_default_attribs ()
 
     #count = 0
-    if bconf.RENDER :
+    if BCONF.render :
         while btasks.work_async () :
             bprofile.begin ( "render" )
             bsprites.render ()
