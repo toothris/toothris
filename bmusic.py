@@ -8,11 +8,12 @@ from bconf import BCONF
 
 
 def init () :
-    pygame.mixer.init ()
     if BCONF.music :
+        pygame.mixer.init ()
         pygame.mixer.music.load ( BCONF.music )
         pygame.mixer.music.play ()
 
 
 def done () :
-    pygame.mixer.quit ()
+    if BCONF.music :
+        pygame.mixer.quit ()
