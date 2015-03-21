@@ -22,17 +22,3 @@ parser.add_option('', '--record', default=False, dest='record',
 parser.add_option('', '--events', default='toothris.events', dest='events', 
                   help='Events file name.')
 (BCONF, args) = parser.parse_args()
-
-# CONFIG
-
-WIDTH               = 800
-HEIGHT              = 600
-FULLSCREEN          = False
-
-FPS                 = 60
-
-MAINTAIN_FPS        = True
-RENDER              = True
-
-EVENTS_RECORD       = False
-EVENTS_PLAY         = False
