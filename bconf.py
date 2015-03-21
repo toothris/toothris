@@ -23,8 +23,6 @@ parser.add_option('', '--events', default='toothris.events', dest='events',
                   help='Events file name.')
 (opts, args) = parser.parse_args()
 
-print 'bconf loaded'
-
 # CONFIG
 
 WIDTH               = 800
