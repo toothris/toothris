@@ -26,9 +26,6 @@ KEY_LEFT                = 276
 KEY_RIGHT               = 275
 KEY_ESC                 = 27
 
-# EVENTS LOGGING
-EVENTS_FILE_NAME        = "events.log"
-
 
 # VIRTUAL KEYS
 
@@ -90,7 +87,7 @@ def init () :
     global random_seed
 
     if BCONF.replay :
-        f = open ( EVENTS_FILE_NAME, "rb" )
+        f = open ( BCONF.events, "rb" )
         random_seed         = pickle.load ( f )
         events_to_play      = pickle.load ( f )
         mouse_pos_to_play   = pickle.load ( f )
@@ -102,7 +99,7 @@ def init () :
 
 def done () :
     if BCONF.record :
-        f = open ( EVENTS_FILE_NAME, "wb" )
+        f = open ( BCONF.events, "wb" )
         pickle.dump ( random_seed        , f )
         pickle.dump ( events_recorded    , f )
         pickle.dump ( mouse_pos_recorded , f )
