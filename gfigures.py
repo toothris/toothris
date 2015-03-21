@@ -1,4 +1,4 @@
-# -*- coding: cp1251 -*-
+# -*- coding: utf-8 -*-
 
 class Figure :
     def __init__ ( self, texture, frag_texture, rotation0 ) :
