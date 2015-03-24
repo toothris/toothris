@@ -36,26 +36,26 @@ done
 Xvfb $DISPLAY -screen 0 ${WIDTH}x${HEIGHT}x24 &
 XVFB=$!
 
-set +e
 rm -rf "game*.bmp"
+set +e
 python2 -B toothris.py --width $WIDTH --height $HEIGHT --fps $FPS \
-  --freefps --replay --events event_logs/demo.events --frames 'game%06d.bmp' \
-  --stopframe 1000
+  --freefps --replay --events event_logs/demo.events --frames 'game%06d.bmp'
 set -e
 
 kill $XVFB
 
-rm -rf toothris.mkv
+rm -rf toothris${WIDTH}x${HEIGHT}.mkv
 ffmpeg \
   -i music.wav \
-  -r $FPS -i blank.bmp \
+  -loop 1 -t $SILENCE -r $FPS -i blank.bmp \
   -r $FPS -i 'start%06d.bmp' \
   -r $FPS -i 'game%06d.bmp' \
+  -loop 1 -t $SILENCE -r $FPS -i start000000.bmp \
   -filter_complex "\
-    [2:0] [3:0] concat=n=2:a=0:v=1 [main];\
     aevalsrc=0:d=${SILENCE} [silence];\
-    [1:0] [silence] [main] [0:0] concat=n=2:v=1:a=1 [v] [a]" \
+    [1:0] [2:0] [3:0] [4:0] concat=n=4:v=1:a=0 [v];\
+    [silence] [0:0] concat=n=2:v=0:a=1 [a]" \
   -map "[v]" -map "[a]" \
   -c:a libfdk_aac -b:a 256k \
   -c:v libx264 -crf 18 \
-  toothris.mkv
+  toothris${WIDTH}x${HEIGHT}.mkv
