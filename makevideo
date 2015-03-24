@@ -9,8 +9,12 @@ START_LEN=220
 START_SIZE=80
 FPS=60
 DISPLAY=:1
+SILENCE=2
 
 xmp -d wav -o music.wav res/artificial_sweetener.xm
+
+rm -rf "blank.bmp"
+convert -size ${WIDTH}x${HEIGHT} xc:black blank.bmp
 
 FRAME=0
 rm -rf "start*.bmp"
@@ -42,9 +46,16 @@ set -e
 kill $XVFB
 
 rm -rf toothris.mkv
-ffmpeg -i music.wav -r $FPS -i 'start%06d.bmp' -r $FPS -i 'game%06d.bmp' \
-  -filter_complex "[1:0] [2:0] concat=n=2:v=1 [v]" \
-  -map 0:0 -map "[v]" \
+ffmpeg \
+  -i music.wav \
+  -r $FPS -i blank.bmp \
+  -r $FPS -i 'start%06d.bmp' \
+  -r $FPS -i 'game%06d.bmp' \
+  -filter_complex "\
+    [2:0] [3:0] concat=n=2:a=0:v=1 [main];\
+    aevalsrc=0:d=${SILENCE} [silence];\
+    [1:0] [silence] [main] [0:0] concat=n=2:v=1:a=1 [v] [a]" \
+  -map "[v]" -map "[a]" \
   -c:a libfdk_aac -b:a 256k \
   -c:v libx264 -crf 18 \
   toothris.mkv
