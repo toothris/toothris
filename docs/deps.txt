@@ -9,6 +9,7 @@ ttf-dejavu
 xmp
 ffmpeg with fdk_aac
 imagemagick
+xorg-server-xvfb
 
 old:
 pygame-1.7.1release.win32-py2.5.exe

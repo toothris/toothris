@@ -3,24 +3,26 @@
 set -e
 
 URL="github.com/toothris"
-WIDTH=800
-HEIGHT=600
+GAME_WIDTH=800
+GAME_HEIGHT=600
+VID_SIZES="320x240 800x600 854x480"
+GAME_FPS=60
 START_LEN=220
 START_SIZE=80
-FPS=60
 DISPLAY=:1
 SILENCE=2
 
-xmp -d wav -o music.wav res/artificial_sweetener.xm
+xmp -d wav -o music.wav -b 16 -f 48000 res/artificial_sweetener.xm
 
 rm -rf blank.bmp
-convert -size ${WIDTH}x${HEIGHT} xc:black blank.bmp
+convert -size ${GAME_WIDTH}x${GAME_HEIGHT} xc:black blank.bmp
 
 FRAME=0
 rm -rf start*.bmp
 while [ $FRAME -lt $START_LEN ] ; do
   if [[ $((FRAME % 10)) -eq 0 ]] ; then echo "start frame $FRAME" ; fi
-  SCALE=$(bc <<< "scale=2; $START_SIZE+((100-$START_SIZE)*$FRAME/$START_LEN)")
+  SCALE=$(python2 -c "print '%.2f' % \
+    ($START_SIZE+((100.0-$START_SIZE)*$FRAME/$START_LEN))")
   convert \
     '(' '(' -background black -fill white -gravity center \
             -font /usr/share/fonts/TTF/DejaVuSansMono.ttf \
@@ -29,36 +31,62 @@ while [ $FRAME -lt $START_LEN ] ; do
         -resize $SCALE% \
         -gravity center \
         -extent 1600x1200 ')' \
-    -resize ${WIDTH}x${HEIGHT} \
+    -resize ${GAME_WIDTH}x${GAME_HEIGHT} \
     -gravity center \
-    -extent ${WIDTH}x${HEIGHT} \
+    -extent ${GAME_WIDTH}x${GAME_HEIGHT} \
     $(printf 'start%06d.bmp' $FRAME)
   ((FRAME += 1))
 done
 
-Xvfb $DISPLAY -screen 0 ${WIDTH}x${HEIGHT}x24 &
+Xvfb $DISPLAY -screen 0 ${GAME_WIDTH}x${GAME_HEIGHT}x24 &
 XVFB=$!
 
 rm -rf game*.bmp
 set +e
-python2 -B toothris.py --width $WIDTH --height $HEIGHT --fps $FPS \
-  --freefps --replay --events event_logs/demo.events --frames 'game%06d.bmp'
+python2 -B toothris.py --width $GAME_WIDTH --height $GAME_HEIGHT \
+  --fps $GAME_FPS --freefps --replay --events event_logs/demo.events \
+  --stopframe 1000 \
+  --frames 'game%06d.bmp'
 set -e
 
 kill $XVFB
 
-rm -rf toothris${WIDTH}x${HEIGHT}.mkv
-ffmpeg \
-  -i music.wav \
-  -loop 1 -t $SILENCE -r $FPS -i blank.bmp \
-  -r $FPS -i 'start%06d.bmp' \
-  -r $FPS -i 'game%06d.bmp' \
-  -loop 1 -t $SILENCE -r $FPS -i start000000.bmp \
-  -filter_complex "\
-    aevalsrc=0:d=${SILENCE} [silence];\
-    [1:0] [2:0] [3:0] [4:0] concat=n=4:v=1:a=0 [v];\
-    [silence] [0:0] concat=n=2:v=0:a=1 [a]" \
-  -map "[v]" -map "[a]" \
-  -c:a libfdk_aac -b:a 256k \
-  -c:v libx264 -crf 18 \
-  toothris${WIDTH}x${HEIGHT}.mkv
+for VID_SIZE in $VID_SIZES ; do
+  IFS="x"; set $VID_SIZE
+  VID_WIDTH=$1
+  VID_HEIGHT=$2
+  IFS=","; set $(python2 -c "
+wheight = ($VID_WIDTH * $GAME_HEIGHT) / $GAME_WIDTH
+hwidth = ($VID_HEIGHT * $GAME_WIDTH) / $GAME_HEIGHT
+if wheight <= $VID_HEIGHT:
+  width, height = $VID_WIDTH, wheight
+if hwidth <= $VID_WIDTH:
+  width, height = hwidth, $VID_HEIGHT
+xofs = ($VID_WIDTH - width) / 2
+yofs = ($VID_HEIGHT - height) / 2
+print '%i,%i,%i,%i' % (width, height, xofs, yofs)")
+  INNER_WIDTH=$1
+  INNER_HEIGHT=$2
+  INNER_XOFS=$3
+  INNER_YOFS=$4
+  rm -rf toothris${VID_WIDTH}x${VID_HEIGHT}.mp4
+  ffmpeg \
+    -i music.wav \
+    -loop 1 -t $SILENCE -r $GAME_FPS -i blank.bmp \
+    -r $GAME_FPS -i 'start%06d.bmp' \
+    -r $GAME_FPS -i 'game%06d.bmp' \
+    -loop 1 -t $SILENCE -r $GAME_FPS -i start000000.bmp \
+    -filter_complex "
+      [1:0] [2:0] [3:0] [4:0] concat=n=4:v=1:a=0 [rawv];
+      [rawv] scale=${INNER_WIDTH}:${INNER_HEIGHT} [innerv];
+      [innerv] pad=width=${VID_WIDTH}:height=${VID_HEIGHT}
+                  :x=${INNER_XOFS}:y=${INNER_YOFS}:color=black [v];
+      aevalsrc=0|0:s=48000:d=${SILENCE} [silence];
+      [silence] [0:0] concat=n=2:v=0:a=1 [a]" \
+    -map "[v]" -map "[a]" \
+    -c:a libfdk_aac -b:a 384k \
+    -c:v libx264 -crf 18 \
+    toothris${VID_WIDTH}x${VID_HEIGHT}.mp4
+done
+
+rm -rf blank.bmp start*.bmp game*.bmp music.wav
