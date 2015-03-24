@@ -45,7 +45,6 @@ rm -rf game*.bmp
 set +e
 python2 -B toothris.py --width $GAME_WIDTH --height $GAME_HEIGHT \
   --fps $GAME_FPS --freefps --replay --events event_logs/demo.events \
-  --stopframe 1000 \
   --frames 'game%06d.bmp'
 set -e
 
@@ -55,16 +54,14 @@ for VID_SIZE in $VID_SIZES ; do
   IFS="x"; set $VID_SIZE
   VID_WIDTH=$1
   VID_HEIGHT=$2
-  IFS=","; set $(python2 -c "
-wheight = ($VID_WIDTH * $GAME_HEIGHT) / $GAME_WIDTH
-hwidth = ($VID_HEIGHT * $GAME_WIDTH) / $GAME_HEIGHT
-if wheight <= $VID_HEIGHT:
-  width, height = $VID_WIDTH, wheight
-if hwidth <= $VID_WIDTH:
-  width, height = hwidth, $VID_HEIGHT
-xofs = ($VID_WIDTH - width) / 2
-yofs = ($VID_HEIGHT - height) / 2
-print '%i,%i,%i,%i' % (width, height, xofs, yofs)")
+  IFS=","; set $(python2 -c \
+   "wheight = ($VID_WIDTH * $GAME_HEIGHT) / $GAME_WIDTH; \
+    hwidth = ($VID_HEIGHT * $GAME_WIDTH) / $GAME_HEIGHT; \
+    width = $VID_WIDTH if wheight <= $VID_HEIGHT else hwidth; \
+    height = $VID_HEIGHT if hwidth <= $VID_WIDTH else wheight; \
+    xofs = ($VID_WIDTH - width) / 2; \
+    yofs = ($VID_HEIGHT - height) / 2; \
+    print '%i,%i,%i,%i' % (width, height, xofs, yofs)")
   INNER_WIDTH=$1
   INNER_HEIGHT=$2
   INNER_XOFS=$3
@@ -79,7 +76,7 @@ print '%i,%i,%i,%i' % (width, height, xofs, yofs)")
     -filter_complex "
       [1:0] [2:0] [3:0] [4:0] concat=n=4:v=1:a=0 [rawv];
       [rawv] scale=${INNER_WIDTH}:${INNER_HEIGHT} [innerv];
-      [innerv] pad=width=${VID_WIDTH}:height=${VID_HEIGHT}
+      [innerv] pad=width=${VID_WIDTH}:height=${VID_HEIGHT} \
                   :x=${INNER_XOFS}:y=${INNER_YOFS}:color=black [v];
       aevalsrc=0|0:s=48000:d=${SILENCE} [silence];
       [silence] [0:0] concat=n=2:v=0:a=1 [a]" \
