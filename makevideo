@@ -1,0 +1,23 @@
+#!/bin/sh
+
+URL="github.com/toothris"
+WIDTH=800
+HEIGHT=600
+START_LEN=100
+START_SIZE=80
+
+FRAME=0
+while [ $FRAME -lt $START_LEN ] ; do
+  echo "start frame $FRAME"
+  SCALE=$(bc <<< "scale=2; $START_SIZE+((100-$START_SIZE)*$FRAME/$START_LEN)")
+  convert \
+    '(' -background black -fill white -gravity center \
+        -font /usr/share/fonts/TTF/DejaVuSansMono.ttf \
+        -pointsize 90 label:"$URL" \
+        -resize ${WIDTH}x${HEIGHT} \
+    ')' \
+    -scale $SCALE% \
+    -extent ${WIDTH}x${HEIGHT} \
+    $(printf 'start%05d.bmp' $FRAME)
+  ((FRAME++))
+done
