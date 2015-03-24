@@ -78,8 +78,9 @@ for VID_SIZE in $VID_SIZES ; do
       [rawv] scale=${INNER_WIDTH}:${INNER_HEIGHT} [innerv];
       [innerv] pad=width=${VID_WIDTH}:height=${VID_HEIGHT} \
                   :x=${INNER_XOFS}:y=${INNER_YOFS}:color=black [v];
-      aevalsrc=0|0:s=48000:d=${SILENCE} [silence];
-      [silence] [0:0] concat=n=2:v=0:a=1 [a]" \
+      aevalsrc=0|0:s=48000:d=${SILENCE} [silence1];
+      aevalsrc=0|0:s=48000:d=${SILENCE} [silence2];
+      [silence1] [0:0] [silence2] concat=n=3:v=0:a=1 [a]" \
     -map "[v]" -map "[a]" \
     -c:a libfdk_aac -b:a 384k \
     -c:v libx264 -crf 18 -pix_fmt yuv420p \
