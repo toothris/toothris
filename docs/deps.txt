@@ -4,6 +4,12 @@ python2-opengl
 stackless-python2-2.7.6r3-1-x86_64.pkg.tar.xz
 python-rabbyt-0.8.3-4-x86_64.pkg.tar.xz
 
+video:
+ttf-dejavu
+xmp
+ffmpeg with fdk_aac
+imagemagick
+
 old:
 pygame-1.7.1release.win32-py2.5.exe
 PyOpenGL-3.0.0b1.win32.exe
