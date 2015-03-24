@@ -5,7 +5,7 @@ set -e
 URL="github.com/toothris"
 WIDTH=800
 HEIGHT=600
-START_LEN=100
+START_LEN=220
 START_SIZE=80
 FPS=60
 DISPLAY=:1
@@ -13,6 +13,7 @@ DISPLAY=:1
 xmp -d wav -o music.wav res/artificial_sweetener.xm
 
 FRAME=0
+rm -rf "start*.bmp"
 while [ $FRAME -lt $START_LEN ] ; do
   if [[ $((FRAME % 10)) -eq 0 ]] ; then echo "start frame $FRAME" ; fi
   SCALE=$(bc <<< "scale=2; $START_SIZE+((100-$START_SIZE)*$FRAME/$START_LEN)")
@@ -32,9 +33,18 @@ Xvfb $DISPLAY -screen 0 ${WIDTH}x${HEIGHT}x24 &
 XVFB=$!
 
 set +e
+rm -rf "game*.bmp"
 python2 -B toothris.py --width $WIDTH --height $HEIGHT --fps $FPS \
   --freefps --replay --events event_logs/demo.events --frames 'game%06d.bmp' \
-  --stopframe 200
+  --stopframe 1000
 set -e
 
 kill $XVFB
+
+rm -rf toothris.mkv
+ffmpeg -i music.wav -r $FPS -i 'start%06d.bmp' -r $FPS -i 'game%06d.bmp' \
+  -filter_complex "[1:0] [2:0] concat=n=2:v=1 [v]" \
+  -map 0:0 -map "[v]" \
+  -c:a libfdk_aac -b:a 256k \
+  -c:v libx264 -crf 18 \
+  toothris.mkv
