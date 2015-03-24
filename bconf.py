@@ -25,4 +25,6 @@ parser.add_option('', '--music', default='', dest='music',
                   help='Music file name.')
 parser.add_option('', '--frames', default='', dest='frames',
                   help='Save each frame to file.')
+parser.add_option('', '--stopframe', default=9999999, type='int',
+                  dest='stopframe', help='Save each frame to file.')
 (BCONF, args) = parser.parse_args()

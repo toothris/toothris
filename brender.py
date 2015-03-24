@@ -65,4 +65,6 @@ def async_render () :
                 if frame % REPORT_FRAMES == 0 :
                     print 'frame %i' % frame
                 frame += 1
+            if frame == BCONF.stopframe :
+                raise Exception ( 'stop frame reached' )
             bprofile.end ( "render" )
