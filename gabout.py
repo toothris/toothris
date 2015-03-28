@@ -24,7 +24,7 @@ LOGO_HIDE_TIME          = 2
 LOGO_HIDE_SCALE         = [ 1, 2.5, 0.1, 0 ]
 LOGO_HIDE_ROTATION      = [ 0, 0.05, 0.5, 1 ]
 
-BUTTON_EXIT_TEXTURE     = "res/ui_menu/256x064_exit.png"
+BUTTON_EXIT_TEXTURE     = "res/ui_menu/256x064_return.png"
 BUTTON_NUMBER_OFFSET    = -2
 
 

@@ -9,7 +9,7 @@ import gbutton
 # CONSTS
 
 BUTTON_OPTIONS_TEXTURE  = "res/ui_menu/256x064_options.png"
-BUTTON_EXIT_TEXTURE     = "res/ui_menu/256x064_exit.png"
+BUTTON_EXIT_TEXTURE     = "res/ui_menu/256x064_return.png"
 BUTTON_NUMBER_OFFSET    = 0.5
 
 

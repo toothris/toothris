@@ -18,7 +18,7 @@ STARS_COUNT             = 50
 BUTTON_NEW_GAME_TEXTURE = "res/ui_menu/256x064_new_game.png"
 BUTTON_OPTIONS_TEXTURE  = "res/ui_menu/256x064_options.png"
 BUTTON_ABOUT_TEXTURE    = "res/ui_menu/256x064_about.png"
-BUTTON_EXIT_TEXTURE     = "res/ui_menu/256x064_exit.png"
+BUTTON_EXIT_TEXTURE     = "res/ui_menu/256x064_quit.png"
 BUTTON_NUMBER_OFFSET    = 1.5
 BUTTONS_APPEAR_DELAY    = 1.5
 
