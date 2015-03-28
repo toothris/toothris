@@ -1,0 +1,4 @@
+13c13
+< depends=('python2' 'mesa')
+---
+> depends=('python2' 'mesa' 'glu')
