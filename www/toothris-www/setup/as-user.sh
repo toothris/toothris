@@ -7,14 +7,14 @@ set -e
 # libxmp
 fetch-aur /li libxmp
 makepkg -sc --noconfirm
-sudo pacman -U --noconfirm libxmp-4.3.0-1-x86_64.pkg.tar.xz
-rm libxmp-4.3.0-1-x86_64.pkg.tar.xz
+sudo pacman -U --noconfirm libxmp-4.3.2-1-x86_64.pkg.tar.xz
+rm libxmp-4.3.2-1-x86_64.pkg.tar.xz
 
 # xmp
 fetch-aur /xm xmp
 makepkg -sc --noconfirm
-sudo pacman -U --noconfirm xmp-4.0.9-1-x86_64.pkg.tar.xz
-rm xmp-4.0.9-1-x86_64.pkg.tar.xz
+sudo pacman -U --noconfirm xmp-4.0.10-1-x86_64.pkg.tar.xz
+rm xmp-4.0.10-1-x86_64.pkg.tar.xz
 
 # ffmpeg-libfdk_aac
 fetch-aur /ff ffmpeg-libfdk_aac
