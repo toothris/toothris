@@ -55,9 +55,10 @@ import res_ui_menu_064x064_star2
 import res_ui_menu_064x064_star3
 import res_ui_menu_064x064_star4
 import res_ui_menu_256x064_about
-import res_ui_menu_256x064_exit
 import res_ui_menu_256x064_new_game
 import res_ui_menu_256x064_options
+import res_ui_menu_256x064_quit
+import res_ui_menu_256x064_return
 import res_ui_menu_256x064_selected1
 import res_ui_menu_256x064_selected2
 import res_ui_menu_256x064_selected3
@@ -127,9 +128,10 @@ lookup = \
     , res_ui_menu_064x064_star3.name : res_ui_menu_064x064_star3
     , res_ui_menu_064x064_star4.name : res_ui_menu_064x064_star4
     , res_ui_menu_256x064_about.name : res_ui_menu_256x064_about
-    , res_ui_menu_256x064_exit.name : res_ui_menu_256x064_exit
     , res_ui_menu_256x064_new_game.name : res_ui_menu_256x064_new_game
     , res_ui_menu_256x064_options.name : res_ui_menu_256x064_options
+    , res_ui_menu_256x064_quit.name : res_ui_menu_256x064_quit
+    , res_ui_menu_256x064_return.name : res_ui_menu_256x064_return
     , res_ui_menu_256x064_selected1.name : res_ui_menu_256x064_selected1
     , res_ui_menu_256x064_selected2.name : res_ui_menu_256x064_selected2
     , res_ui_menu_256x064_selected3.name : res_ui_menu_256x064_selected3
