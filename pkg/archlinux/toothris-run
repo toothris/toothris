@@ -1,2 +1,2 @@
 #!/bin/sh
-python2 /usr/lib/toothris/toothris.py "$@"
+python2 /usr/lib/toothris/toothris.pyc "$@"

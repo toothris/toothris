@@ -14,12 +14,12 @@ md5sums=('SKIP')
 build() {
     cd "$srcdir/$pkgname/src"
     python2 packres.py
+    python2 -m compileall .
 }
 
 package() {
     cd "$srcdir/$pkgname"
     mkdir -p "$pkgdir"/usr/{bin,lib/toothris}
     cp "$startdir/toothris-run" "$pkgdir/usr/bin/toothris"
-    cp -r src/*.py "$pkgdir/usr/lib/toothris"
+    cp -r src/*.pyc "$pkgdir/usr/lib/toothris"
 }
-
