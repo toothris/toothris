@@ -5,7 +5,7 @@ pkgrel=1
 pkgdesc="Smooth Tetris clone with a few surprises."
 arch=('any')
 url="http://www.toothris.org"
-license=('GPL')
+license=('GPL3')
 depends=('python2-pygame' 'python2-opengl' 'stackless-python2' 'python-rabbyt')
 makedepends=('git' 'python2-pygame')
 source=("git+https://github.com/toothris/toothris#tag=${pkgver}")
@@ -19,8 +19,7 @@ build() {
 package() {
     cd "$srcdir/$pkgname"
     mkdir -p "$pkgdir"/usr/{bin,lib/toothris}
-    cp "$startdir/toothris" "$pkgdir/usr/bin/toothris"
+    cp "$startdir/toothris-run" "$pkgdir/usr/bin/toothris"
     cp -r src/*.py "$pkgdir/usr/lib/toothris"
-    install -D -m644 LICENSE "$pkgdir/usr/share/licenses/$pkgname/LICENSE"
 }
 
