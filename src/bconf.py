@@ -1,10 +1,9 @@
 # -*- coding: utf-8 -*-
 
 import optparse
-from version import VERSION
 
 parser = optparse.OptionParser(usage='%prog [options]',
-                               version='%prog '+VERSION)
+                               version='%prog 0.0.0dev')
 parser.add_option('', '--width', default=800, type='int', dest='width',
                   help='Drawing area width.')
 parser.add_option('', '--height', default=600, type='int', dest='height',

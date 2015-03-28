@@ -1,0 +1,26 @@
+# Maintainer: Oleg Plakhotniuk <olegus8@gmail.com>
+pkgname=toothris
+pkgver=0.0.0dev
+pkgrel=1
+pkgdesc="Smooth Tetris clone with a few surprises."
+arch=('any')
+url="http://www.toothris.org"
+license=('GPL')
+depends=('python2-pygame' 'python2-opengl' 'stackless-python2' 'python-rabbyt')
+makedepends=('git' 'python2-pygame')
+source=("git+https://github.com/toothris/toothris#tag=${pkgver}")
+md5sums=('SKIP')
+
+build() {
+    cd "$srcdir/$pkgname/src"
+    python2 packres.py
+}
+
+package() {
+    cd "$srcdir/$pkgname"
+    mkdir -p "${pkgdir}"/usr/{bin,lib/toothris}
+    cp "$startdir/toothris" "${pkgdir}"/usr/bin/toothris
+    cp -r src/*.py "${pkgdir}"/usr/lib/hinance
+    install -D -m644 LICENSE "${pkgdir}/usr/share/licenses/${pkgname}/LICENSE"
+}
+
