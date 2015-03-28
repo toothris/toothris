@@ -2,7 +2,7 @@
 
 set -e
 
-URL="github.com/toothris"
+URL="www.toothris.org"
 GAME_WIDTH=800
 GAME_HEIGHT=600
 VID_SIZES="320x240 800x600 854x480"
