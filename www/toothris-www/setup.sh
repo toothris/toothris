@@ -26,7 +26,7 @@ pacman -S --noconfirm --needed base base-devel rsyslog sudo
 paccache -rk0
 
 # user
-useradd -m user -G wheel
+useradd -u 1000 -m user -G wheel
 chmod +w /etc/sudoers
 echo '%wheel ALL=(ALL) NOPASSWD: ALL' >> /etc/sudoers
 chown -R user:user /toothris-www

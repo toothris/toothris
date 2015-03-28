@@ -12,10 +12,13 @@ START_SIZE=80
 DISPLAY=:1
 SILENCE=2
 
-xmp -d wav -o music.wav -b 16 -f 48000 res/artificial_sweetener.xm
+WORKDIR=/var/tmp/toothris-www
 
-rm -rf blank.bmp
-convert -size ${GAME_WIDTH}x${GAME_HEIGHT} xc:black blank.bmp
+xmp -d wav -o ${TMPDIR}/music.wav -b 16 -f 48000 \
+  /toothris-www/run/artificial_sweetener.xm
+
+rm -rf ${TMPDIR}/blank.bmp
+convert -size ${GAME_WIDTH}x${GAME_HEIGHT} xc:black ${TMPDIR}/blank.bmp
 
 FRAME=0
 rm -rf start*.bmp
