@@ -19,7 +19,7 @@ rm xmp-4.0.10-1-x86_64.pkg.tar.xz
 # stackless-python2
 fetch-aur /st stackless-python2
 makepkg -sc --noconfirm
-sudo pacman -U --noconfirm stackless-python2-2.7.6r3-1-x86_64.pkg.tar.xz
+yes | sudo pacman -U stackless-python2-2.7.6r3-1-x86_64.pkg.tar.xz
 rm stackless-python2-2.7.6r3-1-x86_64.pkg.tar.xz
 
 # python-rabbyt
