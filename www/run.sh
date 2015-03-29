@@ -9,7 +9,7 @@ set -e
 mkdir -p /var/tmp/toothris-www
 chown 1000:1000 /var/tmp/toothris-www
 
-docker run --rm \
+docker run --rm -t \
     -v /etc/localtime:/etc/localtime:ro \
     -v /etc/toothris-www:/etc/toothris-www:ro \
     -v /var/tmp/toothris-www:/var/tmp/toothris-www \

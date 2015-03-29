@@ -11,8 +11,9 @@ START_LEN=220
 START_SIZE=80
 DISPLAY=:1
 SILENCE=2
-
 TMPDIR=/var/tmp/toothris-www
+
+export DISPLAY
 
 xmp -d wav -o ${TMPDIR}/music.wav -b 16 -f 48000 \
   /toothris-www/run/artificial_sweetener.xm
@@ -23,7 +24,9 @@ convert -size ${GAME_WIDTH}x${GAME_HEIGHT} xc:black ${TMPDIR}/blank.bmp
 FRAME=0
 rm -rf ${TMPDIR}/start*.bmp
 while [ $FRAME -lt $START_LEN ] ; do
-  if [[ $((FRAME % 10)) -eq 0 ]] ; then echo "start frame $FRAME" ; fi
+  if [[ $((FRAME % 10)) -eq 0 ]] ; then
+    echo "start frame $FRAME / $START_LEN" ;
+  fi
   SCALE=$(python2 -c "print '%.2f' % \
     ($START_SIZE+((100.0-$START_SIZE)*$FRAME/$START_LEN))")
   convert \
@@ -44,9 +47,14 @@ done
 Xvfb $DISPLAY -screen 0 ${GAME_WIDTH}x${GAME_HEIGHT}x24 &
 XVFB=$!
 
+while ! xset q &>/dev/null ; do
+  echo "waiting for Xfvb..."
+  sleep 1
+done
+
 rm -rf ${TMPDIR}/game*.bmp
 set +e
-toothris --width $GAME_WIDTH --height $GAME_HEIGHT --fps $GAME_FPS --freefps
+toothris --width $GAME_WIDTH --height $GAME_HEIGHT --fps $GAME_FPS --freefps \
   --replay --events /toothris-www/run/demo.events \
   --frames "${TMPDIR}/game%06d.bmp"
 set -e

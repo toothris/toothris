@@ -31,7 +31,8 @@ chmod +w /etc/sudoers
 echo '%wheel ALL=(ALL) NOPASSWD: ALL' >> /etc/sudoers
 chown -R user:user /toothris-www
 
-pacman -S --noconfirm --needed ttf-dejavu imagemagick xorg-server-xvfb
+pacman -S --noconfirm --needed ttf-dejavu imagemagick \
+                               xorg-server-xvfb xorg-xset
 
 sudo -u user bash -l /toothris-www/setup/as-user.sh
 
