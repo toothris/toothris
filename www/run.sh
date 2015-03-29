@@ -1,6 +1,7 @@
 #!/bin/sh
 
 set +e
+echo "Restarting."
 docker stop toothris-www
 docker rm toothris-www
 set -e
@@ -14,4 +15,4 @@ docker run --rm \
     -v /var/tmp/toothris-www:/var/tmp/toothris-www \
     --name toothris-www -h toothris-www \
     toothris/toothris-www:0.0.0dev-2015-01-02 \
-    sudo -iu user /toothris-www/run.sh
+    sudo -iu user /toothris-www/run/run.sh

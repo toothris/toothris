@@ -16,12 +16,6 @@ makepkg -sc --noconfirm
 sudo pacman -U --noconfirm xmp-4.0.10-1-x86_64.pkg.tar.xz
 rm xmp-4.0.10-1-x86_64.pkg.tar.xz
 
-# ffmpeg-libfdk_aac
-fetch-aur /ff ffmpeg-libfdk_aac
-makepkg -sc --noconfirm
-sudo pacman -U --noconfirm ffmpeg-libfdk_aac-2.5.2-1-x86_64.pkg.tar.xz
-rm ffmpeg-libfdk_aac-2.5.2-1-x86_64.pkg.tar.xz
-
 # stackless-python2
 fetch-aur /st stackless-python2
 makepkg -sc --noconfirm
@@ -42,3 +36,9 @@ cd /toothris-www/setup/toothris
 makepkg -sc --noconfirm
 sudo pacman -U --noconfirm toothris-0.0.0dev-1-any.pkg.tar.xz
 rm toothris-0.0.0dev-1-any.pkg.tar.xz
+
+# ffmpeg-libfdk_aac
+fetch-aur /ff ffmpeg-libfdk_aac
+makepkg -sc --noconfirm
+sudo pacman -U --noconfirm ffmpeg-libfdk_aac-1:2.5.2-1-x86_64.pkg.tar.xz
+rm ffmpeg-libfdk_aac-1:2.5.2-1-x86_64.pkg.tar.xz
