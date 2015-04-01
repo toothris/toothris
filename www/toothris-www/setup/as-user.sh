@@ -1,4 +1,4 @@
-#!/bin/sh
+#!/bin/bash
 
 set -e
 
@@ -28,8 +28,8 @@ rm toothris-0.0.0dev-1-any.pkg.tar.xz
 # libxmp
 fetch-aur /li libxmp
 makepkg -sc --noconfirm
-sudo pacman -U --noconfirm libxmp-4.3.2-1-x86_64.pkg.tar.xz
-rm libxmp-4.3.2-1-x86_64.pkg.tar.xz
+sudo pacman -U --noconfirm libxmp-4.3.5-1-x86_64.pkg.tar.xz
+rm libxmp-4.3.5-1-x86_64.pkg.tar.xz
 
 # xmp
 fetch-aur /xm xmp
@@ -40,5 +40,5 @@ rm xmp-4.0.10-1-x86_64.pkg.tar.xz
 # ffmpeg-libfdk_aac
 fetch-aur /ff ffmpeg-libfdk_aac
 makepkg -sc --noconfirm
-sudo pacman -U --noconfirm ffmpeg-libfdk_aac-1:2.5.2-1-x86_64.pkg.tar.xz
-rm ffmpeg-libfdk_aac-1:2.5.2-1-x86_64.pkg.tar.xz
+sudo pacman -U --noconfirm ffmpeg-libfdk_aac-1:2.5.4-1-x86_64.pkg.tar.xz
+rm ffmpeg-libfdk_aac-1:2.5.4-1-x86_64.pkg.tar.xz
