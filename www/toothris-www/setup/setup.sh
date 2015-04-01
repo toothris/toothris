@@ -6,6 +6,8 @@ set -e
 
 sed 's/^CheckSpace/#CheckSpace/g' -i /etc/pacman.conf
 
+pacman-key --refresh-keys
+
 # Pacman database has changed in version 4.2 on 2014-12-29.
 # Need to upgrade it first before going any further.
 echo "Server = $AA_ROOT/repos/2014/12/28/\$repo/os/\$arch" \
