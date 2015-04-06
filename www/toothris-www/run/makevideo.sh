@@ -77,9 +77,9 @@ set -e
 kill $XVFB
 
 for (( VID_OPTI=0; VID_OPTI<VID_OPTLEN; VID_OPTI++)) ; do
-  VID_WIDTH=$(python2 -c "print $VID_OPTS[$VID_OPTI]['width']")
+  VID_WIDTH= $(python2 -c "print $VID_OPTS[$VID_OPTI]['width']")
   VID_HEIGHT=$(python2 -c "print $VID_OPTS[$VID_OPTI]['height']")
-  VID_EXT=$(python2 -c "print $VID_OPTS[$VID_OPTI]['ext']")
+  VID_EXT=   $(python2 -c "print $VID_OPTS[$VID_OPTI]['ext']")
   VID_CODECS=$(python2 -c "print $VID_OPTS[$VID_OPTI]['codecs']")
   IFS=","; set $(python2 -c \
    "wheight = ($VID_WIDTH * $GAME_HEIGHT) / $GAME_WIDTH; \
@@ -111,7 +111,7 @@ for (( VID_OPTI=0; VID_OPTI<VID_OPTLEN; VID_OPTI++)) ; do
     -map \"[v]\" -map \"[a]\" $VID_CODECS \
     ${TMPDIR}/toothris${VID_WIDTH}x${VID_HEIGHT}.${VID_EXT}"
   echo "Running the following command:\n$CMD"
-  $CMD
+  eval $CMD
 done
 
 rm -rf ${TMPDIR}/{blank.bmp,start*.bmp,game*.bmp,music.wav}
