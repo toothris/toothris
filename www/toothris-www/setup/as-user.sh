@@ -15,7 +15,7 @@ npm install
 
 # jquery
 mkdir /toothris-www/jquery
-cd /toothris/www/jquery
+cd /toothris-www/jquery
 npm install jquery@1.11.2
 
 # aws-cli
