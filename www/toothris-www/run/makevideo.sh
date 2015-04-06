@@ -16,8 +16,8 @@ CODECS_MP4="-c:a libfdk_aac -b:a 384k \
             -c:v libx264 -crf 18 -pix_fmt yuv420p"
 CODECS_OGG="-c:a libvorbis -qscale:a 10 \
             -c:v libtheora -qscale:v 10"
-CODECS_WEBM="-c:a libfdk_aac -b:a 384k \
-             -c:v libx264 -crf 18 -pix_fmt yuv420p"
+CODECS_WEBM="-c:a libvorbis -qscale:a 10 \
+             -c:v libvpx -crf 4 -b:v 10M"
 VID_OPTS="[ \
 {'width': 320, 'height': 240, 'ext': 'mp4', 'codecs': '$CODECS_MP4'}, \
 {'width': 854, 'height': 480, 'ext': 'mp4', 'codecs': '$CODECS_MP4'}, \
