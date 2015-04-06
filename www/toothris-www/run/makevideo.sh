@@ -14,8 +14,8 @@ TMPDIR=/var/tmp/toothris-www
 
 CODECS_MP4="-c:a libfdk_aac -b:a 384k \
             -c:v libx264 -crf 18 -pix_fmt yuv420p"
-CODECS_OGG="-c:a libfdk_aac -b:a 384k \
-            -c:v libx264 -crf 18 -pix_fmt yuv420p"
+CODECS_OGG="-c:a libvorbis -qscale:a 10 \
+            -c:v libtheora -qscale:v 10"
 CODECS_WEBM="-c:a libfdk_aac -b:a 384k \
              -c:v libx264 -crf 18 -pix_fmt yuv420p"
 VID_OPTS="[ \
@@ -77,9 +77,9 @@ set -e
 kill $XVFB
 
 for (( VID_OPTI=0; VID_OPTI<VID_OPTLEN; VID_OPTI++)) ; do
-  VID_WIDTH= $(python2 -c "print $VID_OPTS[$VID_OPTI]['width']")
+  VID_WIDTH=$( python2 -c "print $VID_OPTS[$VID_OPTI]['width']")
   VID_HEIGHT=$(python2 -c "print $VID_OPTS[$VID_OPTI]['height']")
-  VID_EXT=   $(python2 -c "print $VID_OPTS[$VID_OPTI]['ext']")
+  VID_EXT=$(   python2 -c "print $VID_OPTS[$VID_OPTI]['ext']")
   VID_CODECS=$(python2 -c "print $VID_OPTS[$VID_OPTI]['codecs']")
   IFS=","; set $(python2 -c \
    "wheight = ($VID_WIDTH * $GAME_HEIGHT) / $GAME_WIDTH; \
@@ -93,7 +93,7 @@ for (( VID_OPTI=0; VID_OPTI<VID_OPTLEN; VID_OPTI++)) ; do
   INNER_HEIGHT=$2
   INNER_XOFS=$3
   INNER_YOFS=$4
-  rm -rf ${TMPDIR}/toothris${VID_WIDTH}x${VID_HEIGHT}.mp4
+  rm -rf ${TMPDIR}/toothris${VID_WIDTH}x${VID_HEIGHT}.${VID_EXT}
   CMD="ffmpeg \
     -i \"${TMPDIR}/music.wav\" \
     -loop 1 -t $SILENCE -r $GAME_FPS -i \"${TMPDIR}/blank.bmp\" \
