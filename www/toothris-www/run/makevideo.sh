@@ -70,7 +70,6 @@ rm -rf ${TMPDIR}/game*.bmp
 set +e
 toothris --width $GAME_WIDTH --height $GAME_HEIGHT --fps $GAME_FPS --freefps \
   --replay --events /toothris-www/run/demo.events \
-  --stopframe 1000 \
   --frames "${TMPDIR}/game%06d.bmp"
 set -e
 
