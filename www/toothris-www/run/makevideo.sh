@@ -5,13 +5,27 @@ set -e
 URL="www.toothris.org"
 GAME_WIDTH=800
 GAME_HEIGHT=600
-VID_SIZES="320x240 800x600 854x480"
 GAME_FPS=60
 START_LEN=220
 START_SIZE=80
 DISPLAY=:1
 SILENCE=2
 TMPDIR=/var/tmp/toothris-www
+
+CODECS_MP4="-c:a libfdk_aac -b:a 384k \
+            -c:v libx264 -crf 18 -pix_fmt yuv420p"
+CODECS_OGG="-c:a libfdk_aac -b:a 384k \
+            -c:v libx264 -crf 18 -pix_fmt yuv420p"
+CODECS_WEBM="-c:a libfdk_aac -b:a 384k \
+             -c:v libx264 -crf 18 -pix_fmt yuv420p"
+VID_OPTS="[ \
+{'width': 320, 'height': 240, 'ext': 'mp4', 'codecs': '$CODECS_MP4'}, \
+{'width': 854, 'height': 480, 'ext': 'mp4', 'codecs': '$CODECS_MP4'}, \
+{'width': 800, 'height': 600, 'ext': 'mp4', 'codecs': '$CODECS_MP4'}, \
+{'width': 800, 'height': 600, 'ext': 'ogg', 'codecs': '$CODECS_OGG'}, \
+{'width': 800, 'height': 600, 'ext': 'webm', 'codecs': '$CODECS_WEBM'}]"
+
+VID_OPTLEN=$(python2 -c "print len($VID_OPTS)")
 
 export DISPLAY
 
@@ -56,15 +70,17 @@ rm -rf ${TMPDIR}/game*.bmp
 set +e
 toothris --width $GAME_WIDTH --height $GAME_HEIGHT --fps $GAME_FPS --freefps \
   --replay --events /toothris-www/run/demo.events \
+  --stopframe 1000 \
   --frames "${TMPDIR}/game%06d.bmp"
 set -e
 
 kill $XVFB
 
-for VID_SIZE in $VID_SIZES ; do
-  IFS="x"; set $VID_SIZE
-  VID_WIDTH=$1
-  VID_HEIGHT=$2
+for (( VID_OPTI=0; VID_OPTI<VID_OPTLEN; VID_OPTI++)) ; do
+  VID_WIDTH=$(python2 -c "print $VID_OPTS[$VID_OPTI]['width']")
+  VID_HEIGHT=$(python2 -c "print $VID_OPTS[$VID_OPTI]['height']")
+  VID_EXT=$(python2 -c "print $VID_OPTS[$VID_OPTI]['ext']")
+  VID_CODECS=$(python2 -c "print $VID_OPTS[$VID_OPTI]['codecs']")
   IFS=","; set $(python2 -c \
    "wheight = ($VID_WIDTH * $GAME_HEIGHT) / $GAME_WIDTH; \
     hwidth = ($VID_HEIGHT * $GAME_WIDTH) / $GAME_HEIGHT; \
@@ -78,24 +94,24 @@ for VID_SIZE in $VID_SIZES ; do
   INNER_XOFS=$3
   INNER_YOFS=$4
   rm -rf ${TMPDIR}/toothris${VID_WIDTH}x${VID_HEIGHT}.mp4
-  ffmpeg \
-    -i "${TMPDIR}/music.wav" \
-    -loop 1 -t $SILENCE -r $GAME_FPS -i "${TMPDIR}/blank.bmp" \
-    -r $GAME_FPS -i "${TMPDIR}/start%06d.bmp" \
-    -r $GAME_FPS -i "${TMPDIR}/game%06d.bmp" \
-    -loop 1 -t $SILENCE -r $GAME_FPS -i "${TMPDIR}/start000000.bmp" \
-    -filter_complex "
+  CMD="ffmpeg \
+    -i \"${TMPDIR}/music.wav\" \
+    -loop 1 -t $SILENCE -r $GAME_FPS -i \"${TMPDIR}/blank.bmp\" \
+    -r $GAME_FPS -i \"${TMPDIR}/start%06d.bmp\" \
+    -r $GAME_FPS -i \"${TMPDIR}/game%06d.bmp\" \
+    -loop 1 -t $SILENCE -r $GAME_FPS -i \"${TMPDIR}/start000000.bmp\" \
+    -filter_complex \"
       [1:0] [2:0] [3:0] [4:0] concat=n=4:v=1:a=0 [rawv];
       [rawv] scale=${INNER_WIDTH}:${INNER_HEIGHT} [innerv];
       [innerv] pad=width=${VID_WIDTH}:height=${VID_HEIGHT} \
                   :x=${INNER_XOFS}:y=${INNER_YOFS}:color=black [v];
       aevalsrc=0|0:s=48000:d=${SILENCE} [silence1];
       aevalsrc=0|0:s=48000:d=${SILENCE} [silence2];
-      [silence1] [0:0] [silence2] concat=n=3:v=0:a=1 [a]" \
-    -map "[v]" -map "[a]" \
-    -c:a libfdk_aac -b:a 384k \
-    -c:v libx264 -crf 18 -pix_fmt yuv420p \
-    ${TMPDIR}/toothris${VID_WIDTH}x${VID_HEIGHT}.mp4
+      [silence1] [0:0] [silence2] concat=n=3:v=0:a=1 [a]\" \
+    -map \"[v]\" -map \"[a]\" $VID_CODECS \
+    ${TMPDIR}/toothris${VID_WIDTH}x${VID_HEIGHT}.${VID_EXT}"
+  echo "Running the following command:\n$CMD"
+  $CMD
 done
 
 rm -rf ${TMPDIR}/{blank.bmp,start*.bmp,game*.bmp,music.wav}
