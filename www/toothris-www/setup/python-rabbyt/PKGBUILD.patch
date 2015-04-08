@@ -1,6 +1,0 @@
-13,14c13,14
-< depends=('python2' 'mesa')
-< makedepends=('pyrex')
----
-> depends=('python2' 'mesa' 'glu')
-> makedepends=('pyrex' 'python2-setuptools')
