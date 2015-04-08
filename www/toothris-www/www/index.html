@@ -87,23 +87,38 @@
             transitions all over the place.
             Before long I realized that on some platforms it's problematic
             even in principle to achieve consistent graphics performance.
-            Moreover, the tools I chose made it somewhat complicated to port
-            the game to a more suitable platform.
+            Moreover, the tools I chose made it difficult to port the game
+            to more suitable platforms.
             In the end, I decided to get the game to some stable point and
             stop there.</p>
           <p class="text-justify">
-            I'm sharing all this in hope it might inspire some bright head to
+            I'm sharing all this in hope it might inspire some bright mind to
             create something beautiful.
             Or perhaps someone may even wish to finish this project and
             make a real game out of it.
           <p>If you want to get in touch, please feel free to drop me a line at
            <a href="mailto:contact@toothris.org">contact@toothris.org</a>.</p>
-          <p>Thanks for checking out this page, you're great!</p>
-          <p class="text-right">Oleg</p>
+          <p class="text-right">
+            Thanks for reading all this, you're great! Oleg.</p>
         </div>
         <div class="col-md-6">
           <h2>Features</h2>
-        </div>
+          <p>Freeplay mode only: single infinite level with all gameplay
+             elements. There's no end of the game or gradual levels
+             progression.</p>
+          <p>It runs on Arch Linux, but with a reasonable amount of
+             <a href="https://github.com/toothris/toothris">effort</a>
+             can be built on Windows or Mac OS X.</p>
+          <p>It's written in Stackless Python. All game objects are
+             separate microthreads communicating with each other.</p>
+          <p>Game logic is deterministic. If you start with the same random
+             seed and play back the same player inputs, you'll get the same
+             results.</p>
+          <p>It can record and play back demos. Comes in handy when debugging
+             stuff.</p>
+          <p><a href="toothris800x600.mp4">Game video</a> is automatically
+             generated from the demo played back and rendered frame by
+             frame.</p></div>
       </div>
     </div>
     <script src="jquery.min.js"></script>
