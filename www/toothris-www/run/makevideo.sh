@@ -11,6 +11,7 @@ START_SIZE=80
 DISPLAY=:1
 SILENCE=2
 TMPDIR=/var/tmp/toothris-www
+WWW_SSHOT=3255
 
 CODECS_MP4="-c:a libfdk_aac -b:a 384k \
             -c:v libx264 -crf 18 -pix_fmt yuv420p"
@@ -74,6 +75,8 @@ toothris --width $GAME_WIDTH --height $GAME_HEIGHT --fps $GAME_FPS --freefps \
 set -e
 
 kill $XVFB
+
+cp $(printf "${TMPDIR}/game%06d.bmp" $WWW_SSHOT) ${TMPDIR}/sshot.bmp
 
 for (( VID_OPTI=0; VID_OPTI<VID_OPTLEN; VID_OPTI++)) ; do
   VID_WIDTH=$( python2 -c "print $VID_OPTS[$VID_OPTI]['width']")

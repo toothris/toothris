@@ -17,5 +17,6 @@ cp -r /toothris-www/bootstrap.git/dist/* $TMPDIR
 # jquery
 cp -r /toothris-www/jquery/node_modules/jquery/dist/cdn/* $TMPDIR
 
-convert $TMPDIR/oleg.jpg -rotate 90 -resize 160x120 \
-  $TMPDIR/oleg-sm.jpg
+# pics
+convert $TMPDIR/oleg.jpg -rotate 90 -resize 160x120 $TMPDIR/oleg-sm.jpg
+convert $TMPDIR/sshot.bmp $TMPDIR/sshot.jpg

@@ -22,14 +22,32 @@
       <br>
       <div class="row">
         <div class="col-md-6">
+          <h2>Video</h2>
           <video controls width="100%">
             <source src="toothris800x600.mp4" type="video/mp4">
             <source src="toothris800x600.ogg" type="video/ogg">
             <source src="toothris800x600.webm" type="video/webm">
             Here should've been the video, but your browser doesn't seem to
             support it...
-          </video></div>
+          </video>
+          <br><br>
+          <p><a href="https://github.com/toothris/toothris"
+                class="btn btn-default btn-lg">Build from Source</a>
+             <a href="toothris800x600.mp4"
+                class="btn btn-default btn-lg">Download Video</a></p>
+          <div class="alert alert-success">
+            <strong>For best viewing experience</strong> make sure your system
+            can consistently play 60 fps video without twitches.</div>
+          <p class="text-justify">
+            The video itself was rendered at constant 60 fps rate and features
+            perfectly smooth animation, so if you're seeing any twitches,
+            the problem is likely in your system.
+            Last time I checked, iPhone 4, MacBook Pro and Raspberry Pi B+
+            played the video pretty well.
+            Though I couldn't get satisfactory results on Sony Ion,
+            Lenovo Thinkpad and Playstation 3...</p></div>
         <div class="col-md-6">
+          <h2>Testimonials</h2>
           <blockquote class="blockquote-reverse">
             <p>Looks awesome! Though I have no clue what's going on here...</p>
             <footer>Yulia, my wife</footer></blockquote>
@@ -42,26 +60,7 @@
           <blockquote class="blockquote-reverse">
             <p>What the heck is wrong with controls!?
                Reproduce the CLASSICS first, THEN get creative!</p>
-            <footer>Andrew, ex-colleague</footer></blockquote></div></div>
-      <br>
-      <div class="row">
-        <div class="col-md-6">
-          <p><a href="https://github.com/toothris/toothris"
-                class="btn btn-default btn-lg">Build from Source</a>
-             <a href="toothris800x600.mp4"
-                class="btn btn-default btn-lg">Download Video</a></p>
-          <div class="alert alert-success">
-            <strong>For best viewing experience</strong> make sure your system
-            can consistently play 60 fps video without twitches.</div>
-          <p class="text-justify">
-            The video itself was rendered at constant 60 fps rate and features
-            perfectly smooth animation, so if you're seeing any twitches,
-            the problem is in your system setup.
-            Last time I checked, iPhone 4, MacBook Pro and Raspberry Pi B+
-            played the video pretty well.
-            Though I couldn't get satisfactory results on Sony Ion,
-            Lenovo Thinkpad and Playstation 3...</p></div>
-        <div class="col-md-6">
+            <footer>Andrew, ex-colleague</footer></blockquote>
           <h2>Credits</h2>
           <p>Kick-ass chip tune in the video:
              "Artificial Sweetener" by
@@ -89,7 +88,7 @@
             even in principle to achieve consistent graphics performance.
             Moreover, the tools I chose made it difficult to port the game
             to more suitable platforms.
-            In the end, I decided to get the game to some stable point and
+            In the end I decided to get the game to some stable point and
             stop there.</p>
           <p class="text-justify">
             I'm sharing all this in hope it might inspire some bright mind to
@@ -112,14 +111,21 @@
           <p>It's written in Stackless Python. All game objects are
              separate microthreads communicating with each other.</p>
           <p>Game logic is deterministic. If you start with the same random
-             seed and play back the same player inputs, you'll get the same
+             seed and playback the same player inputs, you'll get the same
              results.</p>
-          <p>It can record and play back demos. Comes in handy when debugging
-             stuff.</p>
-          <p><a href="toothris800x600.mp4">Game video</a> is automatically
-             generated from the demo played back and rendered frame by
-             frame.</p></div>
-      </div>
+          <p>It can record and playback demos. Comes in handy when debugging
+             stuff or shooting gameplay videos.</p>
+          <p><a href="toothris800x600.mp4">Game video</a> at the top of this
+             page was automatically generated from the demo played back and
+             rendered frame by frame.</p></div></div>
+      <div class="row">
+        <div class="col-md-6">
+          <h2>Gameplay</h2>
+        </div>
+        <div class="col-md-6">
+          <h2>Screenshot</h2>
+          <img src="sshot.jpg" class="img-rounded img-responsive">
+        </div></div>
     </div>
     <script src="jquery.min.js"></script>
     <script src="js/bootstrap.min.js"></script>
