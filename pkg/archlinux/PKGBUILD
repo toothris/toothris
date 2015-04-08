@@ -1,6 +1,6 @@
 # Maintainer: Oleg Plakhotniuk <olegus8@gmail.com>
 pkgname=toothris
-pkgver=0.0.0dev
+pkgver=1.0.0
 pkgrel=1
 pkgdesc="Smooth Tetris clone with a few surprises."
 arch=('any')
