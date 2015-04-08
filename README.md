@@ -1,4 +1,10 @@
-# Toothris
+# [Toothris](http://www.toothris.org)
+
+## How to Build
+
+There's a [package](https://aur.archlinux.org/packages/testoob) for Arch
+Linux. Feel free to use it as a reference when building for your target
+platform.
 
 ## License
 
