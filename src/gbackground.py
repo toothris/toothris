@@ -133,4 +133,3 @@ def async_show () :
         for tscratch in tscratches.copy () :
             stop ( tscratch )
         back_sprite.kill ()
-

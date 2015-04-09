@@ -179,5 +179,3 @@ class Pack(object):
         self.image.blit(img, area)
         uv = area[0] * wr, area[1] * hr, area[2] * wr, area[3] * hr
         return (uv[0],uv[1]),(uv[0], uv[3]), (uv[2],uv[3]), (uv[2], uv[1])
-
-
