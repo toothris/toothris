@@ -1,6 +1,6 @@
 # Toothris
 
-Smooth open-source tetris clone with a few surprises.
+Smooth open-source Tetris clone with a few surprises.
 For more information please see the [homepage](http://www.toothris.org).
 
 ## How to Build
