@@ -18,7 +18,7 @@
 import optparse
 
 parser = optparse.OptionParser(prog='toothris', usage='%prog [options]',
-                               version='%prog 1.0.0')
+                               version='%prog 1.0.1')
 parser.add_option('', '--width', default=800, type='int', dest='width',
                   help='Drawing area width.')
 parser.add_option('', '--height', default=600, type='int', dest='height',
